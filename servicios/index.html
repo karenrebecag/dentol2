@@ -193,38 +193,46 @@
     <script src="/Components/WhatsAppButton.js" defer></script>
 
     <!-- Inicialización y lógica del header -->
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        initServiciosComponent('ServiciosContainer');
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initServiciosComponent('ServiciosContainer');
 
-        // Ocultar header cuando servicios o footer son visibles
-        const observeHeader = () => {
-          const header = document.querySelector('.header_dentol');
-          const servicios = document.querySelector('.ServiciosComponent');
-          const footerSection = document.querySelector('.footer_dentol');
+    // Mostrar header solo cuando el banner está en el viewport
+    const observeHeader = () => {
+      const header = document.querySelector('.header_dentol');
+      const banner = document.querySelector('.banner.servicios');
 
-          if (header && (servicios || footerSection)) {
-            const observerHideHeader = new IntersectionObserver(entries => {
-              let anyVisible = entries.some(entry => entry.isIntersecting);
-              if (anyVisible) {
-                header.classList.add('header_hidden_dentol');
-              } else {
+      if (header && banner) {
+        const observerHideHeader = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              console.log(
+                `Banner visible: ${entry.isIntersecting}, intersectionRatio: ${entry.intersectionRatio}`
+              );
+              if (entry.isIntersecting) {
                 header.classList.remove('header_hidden_dentol');
+                console.log('Header visible');
+              } else {
+                header.classList.add('header_hidden_dentol');
+                console.log('Header oculto');
               }
-            }, {
-              threshold: 0.01,
-              rootMargin: '0px 0px -500px 0px'
             });
-
-            if (servicios) observerHideHeader.observe(servicios);
-            if (footerSection) observerHideHeader.observe(footerSection);
-          } else {
-            setTimeout(observeHeader, 100);
+          },
+          {
+            threshold: 0.01, 
+            rootMargin: '0px 0px 0px 0px'
           }
-        };
+        );
 
-        observeHeader();
-      });
-    </script>
+        observerHideHeader.observe(banner);
+      } else {
+        console.warn('Header o banner no encontrados, reintentando...');
+        setTimeout(observeHeader, 100);
+      }
+    };
+
+    observeHeader();
+  });
+</script>
   </body>
 </html>
