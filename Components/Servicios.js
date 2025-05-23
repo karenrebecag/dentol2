@@ -101,10 +101,10 @@ function createServiciosComponent() {
           </div>
 
           <!-- Contenedor de indicador de scroll (barra1) -->
-          <div class="progress-container barra1">
-            <div class="vertical-line" credere="myBar1"></div>
-            <div class="vertical-line" id="lineTwo"></div>
-          </div>
+            <div class="progress-container barra1">
+                <div class="vertical-line" id="myBar1"></div>
+                <div class="vertical-line" id="lineTwo"></div>
+            </div>
 
           <div class="Col50Right LeftColServices">
             <div id="nivel1-continuation">
@@ -494,8 +494,8 @@ function initServiciosComponent(targetId) {
     function centerDots() {
         const containerDots = document.querySelectorAll('.SubContainerServices .dot');
         // Ajustes finos en píxeles
-        const leftDotFineOffset = -5; // Mover 3px a la derecha para Col50Left (negativo porque right disminuye)
-        const rightDotFineOffset = -5; // Mover 3px a la izquierda para Col50Right (negativo porque left disminuye)
+        const leftDotFineOffset = 2; 
+        const rightDotFineOffset = -12; 
     
         containerDots.forEach(dot => {
             const parent = dot.closest('.SubContainerServices');
@@ -616,55 +616,88 @@ function initServiciosComponent(targetId) {
     }
 
     // Lógica para las barras de progreso y estado de puntitos
-    function handleNivelScroll() {
-        const niveles = [
-            { id: 'Nivel1Content', barId: 'myBar1' },
-            { id: 'Nivel2Content', barId: 'myBar2' },
-            { id: 'Nivel3Content', barId: 'myBar3' },
-            { id: 'Nivel4Content', barId: 'myBar4' }
-        ];
+function handleNivelScroll() {
+    const niveles = [
+        { id: 'Nivel1Content', barId: 'myBar1' },
+        { id: 'Nivel2Content', barId: 'myBar2' },
+        { id: 'Nivel3Content', barId: 'myBar3' },
+        { id: 'Nivel4Content', barId: 'myBar4' }
+    ];
 
-        niveles.forEach(nivel => {
-            const nivelContent = document.querySelector(`#${nivel.id}`);
-            if (!nivelContent) return;
+    // Obtener la altura del StickyBar para compensar el offset
+    const stickyBar = document.querySelector('.StickyBar');
+    const stickyBarHeight = stickyBar ? stickyBar.offsetHeight : 0;
 
-            // Calcular progreso de la barra
-            const rect = nivelContent.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const containerTop = rect.top + scrollTop;
-            const containerHeight = nivelContent.offsetHeight;
-            const windowHeight = window.innerHeight;
+    niveles.forEach(nivel => {
+        const nivelContent = document.querySelector(`#${nivel.id}`);
+        if (!nivelContent) {
+            console.warn(`Contenedor ${nivel.id} no encontrado.`);
+            return;
+        }
 
-            const scrollPosition = Math.max(0, scrollTop - containerTop);
-            const maxScroll = containerHeight - windowHeight;
-            const scrolled = maxScroll > 0 ? (scrollPosition / maxScroll) * 100 : 0;
+        // Calcular dimensiones y posiciones
+        const rect = nivelContent.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const containerTop = rect.top + scrollTop - stickyBarHeight; // Compensar StickyBar
+        const containerHeight = nivelContent.offsetHeight;
+        const windowHeight = window.innerHeight;
 
-            const myBar = document.getElementById(nivel.barId);
-            if (myBar) {
-                myBar.style.height = Math.min(scrolled, 100) + '%';
-            }
+        // Calcular progreso
+        const scrollPosition = Math.max(0, scrollTop - containerTop);
+        const maxScroll = containerHeight - windowHeight;
+        let scrolled;
+
+        // Si maxScroll es pequeño o negativo, usar fórmula alternativa
+        if (maxScroll <= 0) {
+            const containerBottom = containerTop + containerHeight;
+            const visibleHeight = Math.min(containerBottom, scrollTop + windowHeight) - Math.max(containerTop, scrollTop);
+            scrolled = containerHeight > 0 ? (visibleHeight / containerHeight) * 100 : 0;
+        } else {
+            // Fórmula estándar con ajuste fino
+            scrolled = (scrollPosition / maxScroll) * 100;
+            scrolled = scrolled * 0.95; // Suavizar el progreso
+        }
+
+        // Depuración para todos los niveles
+        console.log({
+            id: nivel.id,
+            containerTop,
+            containerHeight,
+            windowHeight,
+            scrollTop,
+            scrollPosition,
+            maxScroll,
+            scrolled
         });
 
-        // Actualizar estado de los puntitos
-        const containerDots = document.querySelectorAll('.SubContainerServices .dot');
-        containerDots.forEach(dot => {
-            const parent = dot.closest('.SubContainerServices');
-            if (!parent) return;
+        const myBar = document.getElementById(nivel.barId);
+        if (myBar) {
+            myBar.style.height = `${Math.min(scrolled, 100)}%`;
+        } else {
+            console.error(`Barra ${nivel.barId} no encontrada. Verifica el HTML para el elemento con id="${nivel.barId}".`);
+            console.log('HTML de .progress-container:', document.querySelector(`.progress-container.barra${nivel.barId.slice(-1)}`)?.innerHTML);
+        }
+    });
 
-            const rect = parent.getBoundingClientRect();
-            const isInViewport = rect.top >= 0 && rect.bottom <= window.innerHeight;
-            if (isInViewport) {
-                dot.classList.remove('inactive');
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-                dot.classList.add('inactive');
-            }
-        });
+    // Actualizar estado de los puntitos
+    const containerDots = document.querySelectorAll('.SubContainerServices .dot');
+    containerDots.forEach(dot => {
+        const parent = dot.closest('.SubContainerServices');
+        if (!parent) return;
 
-        centerDots(); // Centrar puntitos en cada scroll
-    }
+        const rect = parent.getBoundingClientRect();
+        const isInViewport = rect.top >= 0 && rect.bottom <= window.innerHeight;
+        if (isInViewport) {
+            dot.classList.remove('inactive');
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+            dot.classList.add('inactive');
+        }
+    });
 
+    centerDots(); // Centrar puntitos en cada scroll
+}
     function initGSAPAnimations() {
         const steps = document.querySelectorAll('.SubContainerServices');
         steps.forEach((step, index) => {
