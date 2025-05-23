@@ -1,0 +1,574 @@
+/* Variables CSS */
+:root {
+  --nivel1-color: #D1E2AC;
+  --nivel2-color: #E2DAAC;
+  --nivel3-color: #B77A39;
+  --nivel4-color: #732525;
+  --pill1-border: #859a50;
+  --pill2-border: #979068;
+  --pill3-border: #ae7d45;
+  --pill4-border: #6a2a28;
+  --pill1-hover: rgba(133, 154, 80, 0.7);
+  --pill2-hover: rgba(151, 144, 104, 0.7);
+  --pill3-hover: rgba(174, 125, 69, 0.7);
+  --pill4-hover: rgba(106, 42, 40, 0.7);
+  --pill2-active: #e1dab1;
+  --pill3-active: #efcfa9;
+  --pill4-active: #c96f6c;
+  --nav-arrow-color: #182031;
+  --dot-inactive: #cfd8dc;
+  --normal-font-size: var(--normal);
+  --bold-font-weight: var(--bold);
+  --normal-font-weight: var(--normal);
+  --transition-ease: ease-in-out 0.3s;
+  --border-radius-pill: 55px;
+  --border-radius-dot: 5px;
+  --border-radius-nav-arrow: 50%;
+  --border-radius-image-right: 50px 0 190px 50px;
+  --border-radius-image-left: 50px 0 50px 190px;
+  --border-radius-image-mobile: 35px;
+}
+
+/* Animaciones */
+@keyframes slideIn {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Globales */
+body {
+  overflow: auto;
+}
+
+/* Main Banner */
+.MainBannerServices {
+  background: url('../assets/Icons/Servicios/BannerServicios.png') center/cover no-repeat;
+  padding: 60px;
+  min-height: 758px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Sticky Navbar */
+.StickyBar {
+  position: sticky;
+  top: 0;
+  padding-top: 20px;
+  z-index: 1000;
+  background-color: white;
+}
+
+/* Servicios Selector */
+.ServiciosSelectorWrapper {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+}
+
+.ServiciosSelector {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  z-index: 1;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Gradientes */
+.Gradient {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 55%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.LeftGradient {
+  left: 0;
+}
+
+.RightGradient {
+  right: 0;
+}
+
+/* Navigation Dots */
+.ServiciosNavDots {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.button-slide,
+.slide-inactive {
+  width: 43px;
+  height: 5px;
+  background: var(--dot-inactive);
+  border-radius: var(--border-radius-dot);
+  cursor: pointer;
+  transition: background var(--transition-ease);
+}
+
+.button-slide[data-slide="0"].slide-active {
+  background: var(--nivel1-color);
+}
+
+.button-slide[data-slide="1"].slide-active {
+  background: var(--nivel2-color);
+}
+
+.button-slide[data-slide="2"].slide-active {
+  background: var(--nivel3-color);
+}
+
+.button-slide[data-slide="3"].slide-active {
+  background: var(--nivel4-color);
+}
+
+/* Pills */
+.Pill {
+  display: flex;
+  align-items: center;
+  padding: 5px 20px;
+  min-width: 250px;
+  gap: 10px;
+  background: white;
+  border-radius: var(--border-radius-pill);
+  text-align: start;
+  animation: slideIn 0.5s ease;
+}
+
+.Pill1,
+.Pill2,
+.Pill3,
+.Pill4 {
+  transition: all var(--transition-ease);
+}
+
+.Pill1 {
+  border: 1px solid var(--pill1-border);
+}
+
+.Pill1:hover {
+  background: var(--pill1-hover);
+  transform: scale(1.05);
+}
+
+.Pill1.active {
+  background: var(--nivel1-color);
+  transform: scale(1.05);
+  border: none;
+}
+
+.Pill2 {
+  border: 1px solid var(--pill2-border);
+}
+
+.Pill2:hover {
+  background: var(--pill2-hover);
+  transform: scale(1.04);
+}
+
+.Pill2.active {
+  background: var(--pill2-active);
+  transform: scale(1.04);
+  border: none;
+}
+
+.Pill3 {
+  border: 1px solid var(--pill3-border);
+}
+
+.Pill3:hover {
+  background: var(--pill3-hover);
+  transform: scale(1.04);
+}
+
+.Pill3.active {
+  background: var(--pill3-active);
+  transform: scale(1.04);
+  border: none;
+}
+
+.Pill4 {
+  border: 1px solid var(--pill4-border);
+}
+
+.Pill4:hover {
+  background: var(--pill4-hover);
+  transform: scale(1.04);
+}
+
+.Pill4.active {
+  background: var(--pill4-active);
+  transform: scale(1.04);
+  border: none;
+}
+
+.InvisiblePill {
+  min-width: 250px;
+  padding: 10px 20px;
+  height: 60px;
+  opacity: 0;
+  pointer-events: none;
+  border: none;
+  background: transparent;
+}
+
+.PillIcon {
+  width: 41px;
+  height: 40px;
+}
+
+.PillTitle1,
+.PillTitle2,
+.PillTitle3,
+.PillTitle4 {
+  font-size: var(--normal-font-size);
+  font-weight: var(--bold-font-weight);
+}
+
+.PillSubTitle1,
+.PillSubTitle2,
+.PillSubTitle3,
+.PillSubTitle4 {
+  font-size: var(--normal-font-size);
+  font-weight: var(--normal-font-weight);
+}
+
+/* Nav Arrows */
+.NavArrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-nav-arrow);
+  border: 1px solid var(--nav-arrow-color);
+  background-color: white;
+  font-size: 30px;
+  transition: background-color var(--transition-ease), border-color var(--transition-ease);
+}
+
+.NavArrow img {
+  width: 20px;
+  height: 20px;
+  transition: filter var(--transition-ease);
+}
+
+.NavArrow:not(:disabled):hover {
+  background-color: var(--nav-arrow-color);
+  border-color: var(--nav-arrow-color);
+}
+
+.NavArrow:not(:disabled):hover img {
+  filter: invert(100%) brightness(100%);
+}
+
+.NavArrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Nivel Content */
+#ServiciosContent {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.NivelContent {
+  position: relative;
+  padding: 20px 60px 0;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: center;
+  animation: slideIn 0.5s ease;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.Col50Left,
+.Col50Right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.Col50Left {
+  align-items: flex-end;
+}
+
+.Col50Right {
+  align-items: flex-start;
+}
+
+.LeftColServices {
+  margin-top: 300px;
+}
+
+.SubContainerServices {
+  max-width: 712px;
+  margin-bottom: 60px;
+  position: relative; /* Contenedor de referencia para .dot */
+}
+
+.imgServices {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  background-position: center;
+}
+
+.imgServices_borderRight {
+  border-radius: var(--border-radius-image-right);
+}
+
+.imgServices_borderLeft {
+  border-radius: var(--border-radius-image-left);
+}
+
+.Paragraph,
+.ParagraphBold {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.ParagraphBold {
+  font-size: 25px !important;
+}
+
+/* Anclajes */
+#nivel1,
+#nivel2,
+#nivel3,
+#nivel4 {
+  scroll-margin-top: 40px;
+}
+
+/* Estilos para los puntitos */
+.dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  z-index: 12; /* Mayor que progress-container (10), menor que StickyBar (1000) */
+  top: 0; /* Alineado con la parte superior del SubContainerServices */
+}
+
+.Col50Left .dot {
+  right: 0; /* Esquina superior derecha para Col50Left */
+}
+
+.Col50Right .dot {
+  left: 0; /* Esquina superior izquierda para Col50Right */
+}
+
+.dot.inactive {
+  background: #ccc;
+  opacity: 0.5;
+}
+
+.dot.active {
+  background: #132035;
+  opacity: 1;
+  transform: scale(1.5);
+  transition: background 0.3s ease 0.2s, opacity 0.3s ease, transform 0.3s ease; /* Delay en background */
+}
+
+/* Estilos para el indicador de scroll en todos los niveles */
+.progress-container {
+  position: sticky;
+  top: 0;
+  width: 6px;
+  height: 100vh;
+  background-color: transparent;
+  z-index: 10;
+  margin: 0 20px;
+}
+
+.vertical-line {
+  position: absolute;
+  width: 6px;
+  border-radius: 10px;
+  max-height: 100%;
+  transition: height 0.3s ease;
+}
+
+#myBar1 {
+  background: var(--nivel1-color);
+  height: 0;
+  top: 0;
+  z-index: 11;
+}
+
+#myBar2 {
+  background: var(--nivel2-color);
+  height: 0;
+  top: 0;
+  z-index: 11;
+}
+
+#myBar3 {
+  background: var(--nivel3-color);
+  height: 0;
+  top: 0;
+  z-index: 11;
+}
+
+#myBar4 {
+  background: var(--nivel4-color);
+  height: 0;
+  top: 0;
+  z-index: 11;
+}
+
+#lineTwo {
+  border: 1px dashed #c1c1c3c0;
+  height: 100%;
+  top: 0;
+  z-index: 10;
+  background: none;
+}
+
+/* Responsive: up to 1199px */
+@media (max-width: 1199px) {
+  .Col50Right,
+  .Col50Left {
+    width: 100%;
+    margin-top: 0 !important;
+    grid-column: 2 / 3;
+  }
+  .NivelContent {
+    display: grid;
+    gap: 20px;
+    align-items: start;
+    padding-bottom: 0;
+  }
+  .SubContainerServices {
+    max-width: none;
+    margin-bottom: 40px;
+  }
+  .progress-container {
+    display: none;
+  }
+  .dot {
+    display: none; /* Desaparecen junto con la barra de scroll */
+  }
+  .MainBannerServices {
+    display: none; /* Ocultar header en móviles */
+  }
+}
+
+/* Responsive: up to 768px */
+@media (max-width: 768px) {
+  .Col50Right,
+  .Col50Left {
+    width: 100%;
+    margin-top: 0 !important;
+  }
+  .NivelContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0 20px;
+    align-items: start;
+  }
+  .SubContainerServices {
+    width: 100%;
+    margin-bottom: 60px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    order: 999;
+  }
+  #SubContainerServices0 { order: 1; }
+  #SubContainerServices3 { order: 2; }
+  #SubContainerServices1 { order: 3; }
+  #SubContainerServices4 { order: 4; }
+  #SubContainerServices2 { order: 5; }
+  #SubContainerServices5 { order: 6; }
+  #SubContainerServices8 { order: 7; }
+  #SubContainerServices6 { order: 8; }
+  #SubContainerServices9 { order: 9; }
+  #SubContainerServices7 { order: 10; }
+  #SubContainerServices10 { order: 11; }
+  #SubContainerServices16 { order: 12; }
+  #SubContainerServices11 { order: 13; }
+  #SubContainerServices17 { order: 14; }
+  #SubContainerServices12 { order: 15; }
+  #SubContainerServices18 { order: 16; }
+  #SubContainerServices13 { order: 17; }
+  #SubContainerServices19 { order: 18; }
+  #SubContainerServices14 { order: 19; }
+  #SubContainerServices20 { order: 20; }
+  #SubContainerServices15 { order: 21; }
+  #SubContainerServices21 { order: 22; }
+  #SubContainerServices24 { order: 23; }
+  #SubContainerServices22 { order: 24; }
+  #SubContainerServices25 { order: 25; }
+  #SubContainerServices23 { order: 26; }
+  .imgServices {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-image-mobile);
+  }
+  .ServiciosSelector {
+    justify-content: center;
+  }
+  .ServicioButton,
+  .InvisiblePill {
+    display: none !important;
+  }
+  .ServicioButton.active {
+    display: flex !important;
+  }
+  .Gradient {
+    display: none;
+  }
+  .NavArrow {
+    display: none;
+  }
+}
+
+/* Responsive: up to 480px */
+@media (max-width: 480px) {
+  .MainBannerServices {
+    padding: 0 20px;
+  }
+  @supports (-webkit-appearance: none) and (-webkit-touch-callout: none) {
+    #nextServicio img {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+/* Responsive: up to 368px */
+@media (max-width: 368px) {
+  .ServiciosNavDots {
+    padding: 10px 20px;
+  }
+  .NavArrow {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.my-5 {
+  margin-top: 0rem !important;
+}
